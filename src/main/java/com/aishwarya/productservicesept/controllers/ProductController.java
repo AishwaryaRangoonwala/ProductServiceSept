@@ -1,8 +1,12 @@
 package com.aishwarya.productservicesept.controllers;
 
+import com.aishwarya.productservicesept.dtos.ProductNotFoundErrorDTO;
 import com.aishwarya.productservicesept.dtos.ProductRequestDTO;
+import com.aishwarya.productservicesept.exceptions.ProductNotFoundException;
 import com.aishwarya.productservicesept.models.Product;
 import com.aishwarya.productservicesept.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +29,15 @@ public class ProductController {
     // Delete product
 
     @GetMapping("/{productId}")
-    public Product getSingleProduct(@PathVariable("productId") String productId) {
-        return productService.getSingleProduct(productId);
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") String productId) throws ProductNotFoundException {
+        // call the service layer
+        Product product = productService.getSingleProduct(productId);
+        if (product == null) {
+            return new ResponseEntity<>(product, HttpStatus.NOT_FOUND);
+        }
+        else {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        }
     }
 
     @GetMapping("")
@@ -35,7 +46,8 @@ public class ProductController {
     }
 
     @PostMapping("")
-    public Product createProduct(@RequestBody ProductRequestDTO requestDTO) {
+    public Product createProduct(@RequestBody ProductRequestDTO requestDTO) throws ProductNotFoundException {
+
         return productService.createProduct(
                 requestDTO.getTitle(),
                 requestDTO.getDescription(),

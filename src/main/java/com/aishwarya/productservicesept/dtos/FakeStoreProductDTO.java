@@ -16,6 +16,7 @@ public class FakeStoreProductDTO {
     private String image;
 
     public Product toProduct() {
+
         Product product = new Product();
         product.setId(String.valueOf(this.id));
         product.setTitle(this.title);
