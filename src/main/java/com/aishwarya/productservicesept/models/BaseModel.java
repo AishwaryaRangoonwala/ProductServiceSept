@@ -23,5 +23,5 @@ public abstract class BaseModel {
     private Date createdAt; // You can use long for storing time epoch
     @UpdateTimestamp
     private Date updatedAt;
-    private Boolean isDeleted;
+    private Boolean isDeleted = false;
 }

@@ -1,5 +1,6 @@
 package com.aishwarya.productservicesept.dtos;
 
+import com.aishwarya.productservicesept.models.Category;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,7 +9,7 @@ import lombok.Setter;
 public class ProductRequestDTO {
     private String title;
     private String description;
-    private String category;
+    private Category category;
     private Double price;
     private String image;
 }

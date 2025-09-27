@@ -28,25 +28,49 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public Product createProduct(String title, String description, double price, String categoryName, String image) {
-        Product product = new Product();
-        product.setTitle(title);
-        product.setDescription(description);
-        product.setPrice(price);
-        // This categoryName exists in the table OR
-        Optional<Category> categoryOptional = categoryRepository.findByNameIgnoreCase(categoryName);
-        if (categoryOptional.isPresent()) {
-            product.setCategory(categoryOptional.get());
+    public Product createProduct(String title, String description, double price, Category category, String image) {
+        Product p = new Product();
+        p.setTitle(title);
+        p.setDescription(description);
+        p.setPrice(price);
+        p.setImage(image);
+
+        //first we should save the category
+        if (category.getId() != null) {
+            Optional<Category> categoryOptional = categoryRepository.findById(category.getId());
+
+            if (categoryOptional.isEmpty()) {
+                //throw InvalidCategoryException or create the category.
+            }
+
+            p.setCategory(categoryOptional.get());
+        } else {
+            Optional<Category> categoryOptional = categoryRepository.findByName(category.getName());
+
+            if (categoryOptional.isPresent()) {
+                p.setCategory(categoryOptional.get());
+            } else {
+                Category c = new Category();
+                c.setName(category.getName());
+                c = categoryRepository.save(c);
+
+                p.setCategory(c);
+            }
         }
-        else {
-            Category newCategory = new Category();
-            newCategory.setName(categoryName);
-            Category savedCategory = categoryRepository.save(newCategory);
-            product.setCategory(savedCategory);
-        }
-        // This categoryName does not exists in the table
-        product.setImage(image);
-        return productRepository.save(product);
+//        // This categoryName exists in the table OR
+//        Optional<Category> categoryOptional = categoryRepository.findByNameIgnoreCase(categoryName);
+//        if (categoryOptional.isPresent()) {
+//            product.setCategory(categoryOptional.get());
+//        }
+//        else {
+//            Category newCategory = new Category();
+//            newCategory.setName(categoryName);
+//            Category savedCategory = categoryRepository.save(newCategory);
+//            product.setCategory(savedCategory);
+//        }
+//        // This categoryName does not exists in the table
+//        product.setImage(image);
+        return productRepository.save(p);
     }
 
     @Override

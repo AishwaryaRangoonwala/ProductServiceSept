@@ -2,6 +2,7 @@ package com.aishwarya.productservicesept.services;
 
 import com.aishwarya.productservicesept.dtos.FakeStoreProductDTO;
 import com.aishwarya.productservicesept.exceptions.ProductNotFoundException;
+import com.aishwarya.productservicesept.models.Category;
 import com.aishwarya.productservicesept.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,12 +37,12 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product createProduct(String title, String description, double price, String categoryName, String image) {
+    public Product createProduct(String title, String description, double price, Category category, String image) {
         FakeStoreProductDTO fakeStoreProductDTO = new FakeStoreProductDTO();
         fakeStoreProductDTO.setTitle(title);
         fakeStoreProductDTO.setDescription(description);
         fakeStoreProductDTO.setPrice(price);
-        fakeStoreProductDTO.setCategory(categoryName);
+        fakeStoreProductDTO.setCategory(category.getName());
         fakeStoreProductDTO.setImage(image);
         FakeStoreProductDTO responseDTO = restTemplate.postForObject(
                 "https://fakestoreapi.com/products",
