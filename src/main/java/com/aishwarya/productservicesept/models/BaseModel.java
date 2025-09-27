@@ -15,9 +15,9 @@ import java.util.Date;
 @Getter
 @Setter
 @MappedSuperclass
-public class BaseModel {
+public abstract class BaseModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @CreatedDate
     private Date createdAt; // You can use long for storing time epoch
