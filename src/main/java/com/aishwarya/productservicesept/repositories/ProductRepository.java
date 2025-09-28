@@ -23,4 +23,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findByCategory_Name(String name);
 
     List<Product> findByCategory(Category category);
+
+    // @Query("select * from products p join categories c on p.category_id = c.id where c.name = ")
+    // customQuery can be written via @Query annotation
+    List<Product> customQuery();
 }
