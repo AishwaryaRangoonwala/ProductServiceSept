@@ -30,14 +30,14 @@ public class ProductController {
     // Delete product
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") String productId) throws ProductNotFoundException {
+    public Product getSingleProduct(@PathVariable("productId") String productId) throws ProductNotFoundException {
         // call the service layer
         Product product = productService.getSingleProduct(productId);
         if (product == null) {
-            return new ResponseEntity<>(product, HttpStatus.NOT_FOUND);
+            throw new ProductNotFoundException("product with id " + productId + " not found.");
         }
         else {
-            return new ResponseEntity<>(product, HttpStatus.OK);
+             return product;
         }
     }
 
