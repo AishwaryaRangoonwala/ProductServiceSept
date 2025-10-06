@@ -66,4 +66,9 @@ public class FakeStoreProductService implements ProductService {
         }
         return products;
     }
+
+    @Override
+    public void deleteProduct(Long id) throws ProductNotFoundException {
+
+    }
 }

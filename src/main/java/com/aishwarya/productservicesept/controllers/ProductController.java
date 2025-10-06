@@ -57,5 +57,10 @@ public class ProductController {
                 requestDTO.getImage()
         );
     }
+
+    @DeleteMapping("/{productId}")
+    public void deleteProduct(@PathVariable("productId") Long productId) throws ProductNotFoundException {
+
+    }
     
 }

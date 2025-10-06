@@ -78,4 +78,11 @@ public class SelfProductService implements ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+    @Override
+    public void deleteProduct(Long id) throws ProductNotFoundException {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (optionalProduct.isEmpty()) throw  new ProductNotFoundException("product not found");
+        productRepository.deleteById(id);
+    }
 }
