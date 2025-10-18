@@ -1,5 +1,6 @@
 package com.aishwarya.productservicesept.controllers;
 
+import com.aishwarya.productservicesept.commons.AuthCommon;
 import com.aishwarya.productservicesept.dtos.ProductNotFoundErrorDTO;
 import com.aishwarya.productservicesept.dtos.ProductRequestDTO;
 import com.aishwarya.productservicesept.exceptions.ProductNotFoundException;
@@ -17,9 +18,11 @@ import java.util.List;
 public class ProductController {
 
     private ProductService productService;
+    private AuthCommon authCommon;
 
-    public ProductController(@Qualifier("selfProductService") ProductService productService) {
+    public ProductController(@Qualifier("selfProductService") ProductService productService, AuthCommon authCommon) {
         this.productService = productService;
+        this.authCommon = authCommon;
     }
 
     // this is the class which is the entry point of request
@@ -29,15 +32,22 @@ public class ProductController {
     // Update product
     // Delete product
 
-    @GetMapping("/{productId}")
-    public Product getSingleProduct(@PathVariable("productId") String productId) throws ProductNotFoundException {
+    @GetMapping("/{productId}/{tokenValue}")
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") String productId,
+                                    @PathVariable("tokenValue") String tokenValue)
+            throws ProductNotFoundException {
+        if (!authCommon.validateToken(tokenValue)) {
+            // Invalid Token
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        System.out.println("Passed authorization---------------->");
         // call the service layer
         Product product = productService.getSingleProduct(productId);
         if (product == null) {
             throw new ProductNotFoundException("product with id " + productId + " not found.");
         }
         else {
-             return product;
+             return new ResponseEntity<>(product, HttpStatus.OK);
         }
     }
 
