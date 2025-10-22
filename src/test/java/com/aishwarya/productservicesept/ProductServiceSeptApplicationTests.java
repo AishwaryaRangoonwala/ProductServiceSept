@@ -22,13 +22,13 @@ class ProductServiceSeptApplicationTests {
     void contextLoads() {
     }
 
-    @Test
-    public void testFetchTypes() {
-        Optional<Product> optionalProduct = productRepository.findById(1L);
-        System.out.println("DEBUG");
-        Optional<Category> optionalCategory = categoryRepository.findById(1L);
-        List<Product> products = optionalCategory.get().getExpectedProducts();
-        System.out.println("DEBUG");
-    }
+//    @Test
+//    public void testFetchTypes() {
+//        Optional<Product> optionalProduct = productRepository.findById(1L);
+//        System.out.println("DEBUG");
+//        Optional<Category> optionalCategory = categoryRepository.findById(1L);
+//        List<Product> products = optionalCategory.get().getExpectedProducts();
+//        System.out.println("DEBUG");
+//    }
 
 }

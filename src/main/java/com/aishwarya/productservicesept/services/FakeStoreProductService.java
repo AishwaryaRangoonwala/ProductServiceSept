@@ -5,6 +5,7 @@ import com.aishwarya.productservicesept.exceptions.ProductNotFoundException;
 import com.aishwarya.productservicesept.models.Category;
 import com.aishwarya.productservicesept.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -70,5 +71,10 @@ public class FakeStoreProductService implements ProductService {
     @Override
     public void deleteProduct(Long id) throws ProductNotFoundException {
 
+    }
+
+    @Override
+    public Page<Product> getProductsByTitle(String title, int pageNumber, int pageSize) {
+        return null;
     }
 }

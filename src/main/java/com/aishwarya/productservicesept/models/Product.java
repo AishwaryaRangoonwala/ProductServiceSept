@@ -18,7 +18,9 @@ public class Product extends BaseModel {
     // We can use Cacade
     // PERSIST to
     // @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @ManyToOne(cascade = CascadeType.ALL)
+    //@ManyToOne
+            //(cascade = CascadeType.ALL)
+    @ManyToOne
     private Category category;
     private String image;
 }

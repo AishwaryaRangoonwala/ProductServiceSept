@@ -3,6 +3,7 @@ package com.aishwarya.productservicesept.services;
 import com.aishwarya.productservicesept.exceptions.ProductNotFoundException;
 import com.aishwarya.productservicesept.models.Category;
 import com.aishwarya.productservicesept.models.Product;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ProductService {
     List<Product> getAllProducts();
 
     void deleteProduct(Long id) throws ProductNotFoundException;
+
+    Page<Product> getProductsByTitle(String title, int pageNumber, int pageSize);
 }

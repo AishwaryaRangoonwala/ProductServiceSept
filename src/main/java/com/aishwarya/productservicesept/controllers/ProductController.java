@@ -7,10 +7,12 @@ import com.aishwarya.productservicesept.exceptions.ProductNotFoundException;
 import com.aishwarya.productservicesept.models.Product;
 import com.aishwarya.productservicesept.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @RestController
@@ -71,6 +73,13 @@ public class ProductController {
     @DeleteMapping("/{productId}")
     public void deleteProduct(@PathVariable("productId") Long productId) throws ProductNotFoundException {
 
+    }
+
+    @GetMapping("/{title}/{pageNumber}/{pageSize}")
+    public Page<Product> getProductsByTitle(@PathVariable("title") String title,
+                                            @PathVariable("pageNumber") int pageNumber,
+                                            @PathVariable("pageSize")  int pageSize) {
+        return productService.getProductsByTitle(title, pageNumber, pageSize);
     }
     
 }

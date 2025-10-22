@@ -7,6 +7,9 @@ import com.aishwarya.productservicesept.repositories.CategoryRepository;
 import com.aishwarya.productservicesept.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -84,5 +87,23 @@ public class SelfProductService implements ProductService {
         Optional<Product> optionalProduct = productRepository.findById(id);
         if (optionalProduct.isEmpty()) throw  new ProductNotFoundException("product not found");
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<Product> getProductsByTitle(String title, int pageNumber, int pageSize) {
+        /*
+        PageSize = 10
+        Page Number = 7
+        Limit = 10
+        Offset = 61
+        Formula = (PageNumber - 1) * PageSize
+         */
+        Sort sort = Sort.by(Sort.Direction.ASC, "price")
+                .and(Sort.by(Sort.Direction.DESC, "title"))
+                .and(Sort.by(Sort.Direction.ASC, "id"));
+        // .and is used when two products have the same price
+        PageRequest pageRequest = PageRequest.of(pageNumber,pageSize,sort);
+
+        return productRepository.findByTitleContainsIgnoreCase(title, pageRequest);
     }
 }

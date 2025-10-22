@@ -13,6 +13,6 @@ import java.util.List;
 @Entity
 public class Category extends BaseModel {
     private String name;
-    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
-    private List<Product> expectedProducts;
+//    @OneToMany(mappedBy = "category")
+//    private List<Product> expectedProducts;
 }

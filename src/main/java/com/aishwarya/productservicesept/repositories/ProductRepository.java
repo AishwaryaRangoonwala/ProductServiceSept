@@ -2,6 +2,9 @@ package com.aishwarya.productservicesept.repositories;
 
 import com.aishwarya.productservicesept.models.Category;
 import com.aishwarya.productservicesept.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +16,7 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByTitle(String title);
-    List<Product> findByTitleContainsIgnoreCase(String title);
+    Page<Product> findByTitleContainsIgnoreCase(String title, Pageable pageable);
     // List<Product> findByTitleContainsIgnoreCaseTop10(String title);
     List<Product> findByTitleIgnoreCaseAndDescriptionContainsIgnoreCase(String title, String description);
 
