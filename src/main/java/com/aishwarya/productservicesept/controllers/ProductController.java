@@ -22,7 +22,9 @@ public class ProductController {
     private ProductService productService;
     private AuthCommon authCommon;
 
-    public ProductController(@Qualifier("selfProductService") ProductService productService, AuthCommon authCommon) {
+    public ProductController(@Qualifier("fakeStoreProductService")
+            // @Qualifier("selfProductService")
+                             ProductService productService, AuthCommon authCommon) {
         this.productService = productService;
         this.authCommon = authCommon;
     }
@@ -38,10 +40,10 @@ public class ProductController {
     public ResponseEntity<Product> getSingleProduct(@PathVariable("productId") String productId,
                                     @PathVariable("tokenValue") String tokenValue)
             throws ProductNotFoundException {
-        if (!authCommon.validateToken(tokenValue)) {
-            // Invalid Token
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+//        if (!authCommon.validateToken(tokenValue)) {
+//            // Invalid Token
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
         System.out.println("Passed authorization---------------->");
         // call the service layer
         Product product = productService.getSingleProduct(productId);
