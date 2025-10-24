@@ -1,5 +1,6 @@
 package com.aishwarya.productservicesept.configurations;
 
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -14,6 +15,7 @@ public class AppConfiguration {
     // Spring beans are Spring objects which are to be managed by the spring container
     // Spring will run this method for you
     @Bean
+    @LoadBalanced
     public RestTemplate createRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate;

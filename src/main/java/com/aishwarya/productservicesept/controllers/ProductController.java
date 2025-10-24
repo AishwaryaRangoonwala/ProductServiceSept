@@ -83,5 +83,13 @@ public class ProductController {
                                             @PathVariable("pageSize")  int pageSize) {
         return productService.getProductsByTitle(title, pageNumber, pageSize);
     }
+
+    @GetMapping("/{tokenValue}")
+    public void validateToken(String tokenValue)  {
+                    Boolean ans = authCommon.validateToken(tokenValue);
+                    System.out.println("Validated token from user service----->");
+                    System.out.println(ans);
+            // Invalid Token
+    }
     
 }
